@@ -15,9 +15,9 @@ stage('Build Docker Imagae'){
 stage('Stop Existing Container'){
      sh label: '', script: "sudo docker stop ${container}"
     }	
-stage('Remove Existing Container'){
-     sh label: '', script: "sudo docker rm ${container}"
-    }		
+//stage('Remove Existing Container'){
+//     sh label: '', script: "sudo docker rm ${container}"
+//    }		
 stage ('Runing Container to test built Docker Image'){
     sh label: '', script: "sudo docker run -dit --rm --name ${container} -p 80:80 ${imagename}"
     }

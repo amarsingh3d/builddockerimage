@@ -13,7 +13,7 @@ stage('Build Docker Imagae'){
     }
 
 stage('Stop Existing Container'){
-     sh label: '', script: "sudo docker stop ${container} ."
+     sh label: '', script: "sudo docker stop ${container}"
     }	
 	
 stage ('Runing Container to test built Docker Image'){

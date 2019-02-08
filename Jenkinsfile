@@ -9,22 +9,22 @@ stage('Git Checkout') {
     }
     
 stage('Build Docker Imagae'){
-     powershell "docker build -t  ${imagename} ."
+     sh "docker build -t  ${imagename} ."
     }
      
 stage ('Runing Container to test built Docker Image'){
-    powershell "docker run -dit --rm --name ${container} -p 80:80 ${imagename}"
+    sh "docker run -dit --rm --name ${container} -p 80:80 ${imagename}"
     }
     
 stage('Tag Docker Image'){
-    powershell "docker tag ${imagename} ${env.dockeruser}/ubuntu:16.04"
+    sh "docker tag ${imagename} ${env.dockeruser}/ubuntu:16.04"
     }
 
 stage('Docker Login and Push Image'){
-    withCredentials([usernamePassword(credentialsId: 'dockerhublogin', passwordVariable: 'dockerpasswd', usernameVariable: 'dockeruser')]) {
-    powershell "docker login -u ${dockeruser} -p ${dockerpasswd}"
+    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', passwordVariable: 'dockerpasswd', usernameVariable: 'dockeruser')]) {
+    sh "docker login -u ${dockeruser} -p ${dockerpasswd}"
     }
-    powershell "docker push ${dockeruser}/ubuntu:16.04"
+    sh "docker push ${dockeruser}/ubuntu:16.04"
     }
 
 }

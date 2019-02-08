@@ -4,6 +4,7 @@ from ubuntu:16.04
 maintainer Amar Singh
 # Command to update and install Apache packages
 RUN apt-get update && apt-get install apache2 -y
+cd app
 COPY . /var/www/html/
 # open port 
 EXPOSE 80

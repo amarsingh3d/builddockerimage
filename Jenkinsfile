@@ -11,7 +11,11 @@ stage('Git Checkout') {
 stage('Build Docker Imagae'){
      sh label: '', script: "sudo docker build -t ${imagename} ."
     }
-     
+
+stage('Stop Existing Container'){
+     sh label: '', script: "sudo docker stop ${container} ."
+    }	
+	
 stage ('Runing Container to test built Docker Image'){
     sh label: '', script: "sudo docker run -dit --rm --name ${container} -p 80:80 ${imagename}"
     }

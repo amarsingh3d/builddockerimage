@@ -9,22 +9,22 @@ stage('Git Checkout') {
     }
     
 stage('Build Docker Imagae'){
-     sh "docker build -t  ${imagename} ."
+     sh sudo "docker build -t  ${imagename} ."
     }
      
 stage ('Runing Container to test built Docker Image'){
-    sh "docker run -dit --rm --name ${container} -p 80:80 ${imagename}"
+    sh sudo "docker run -dit --rm --name ${container} -p 80:80 ${imagename}"
     }
     
 stage('Tag Docker Image'){
-    sh "docker tag ${imagename} ${env.dockeruser}/ubuntu:16.04"
+    sh sudo "docker tag ${imagename} ${env.dockeruser}/ubuntu:16.04"
     }
 
-stage('Docker Login and Push Image'){
+stage('Docker Login and Push sudo Image'){
     withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', passwordVariable: 'dockerpasswd', usernameVariable: 'dockeruser')]) {
-    sh "docker login -u ${dockeruser} -p ${dockerpasswd}"
+    sh sudo "docker login -u ${dockeruser} -p ${dockerpasswd}"
     }
-    sh "docker push ${dockeruser}/ubuntu:16.04"
+    sh sudo "docker push sudo ${dockeruser}/ubuntu:16.04"
     }
 
 }
